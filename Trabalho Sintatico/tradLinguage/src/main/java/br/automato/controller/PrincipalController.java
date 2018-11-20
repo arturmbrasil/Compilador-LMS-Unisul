@@ -341,9 +341,9 @@ public class PrincipalController implements Initializable {
 		mapEstados.put(")", new Estado(true, null, Token.RPAREN));
 	}
 	
-	private StringBuffer buffer = new StringBuffer(25);
-	private StringBuffer buffer2 = new StringBuffer(25);
-	private int linha;
+	private static StringBuffer buffer = new StringBuffer(25);
+	private static StringBuffer buffer2 = new StringBuffer(25);
+	private static int linha;
 	
 	@FXML
 	TableView<Recon> tableView;
@@ -354,7 +354,7 @@ public class PrincipalController implements Initializable {
 	@FXML
 	TableColumn<Recon, String> colDesc;
 	
-	final ObservableList<Recon> data = FXCollections.observableArrayList();
+	final static ObservableList<Recon> data = FXCollections.observableArrayList();
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -364,7 +364,7 @@ public class PrincipalController implements Initializable {
 		tableView.setItems(data);
 	}
 	
-	public void analisar(File input) throws IOException, ReconhecimentoException {
+	public static void analisar(File input) throws IOException, ReconhecimentoException {
 		List<String> lines = Files.readLines(input, Charsets.UTF_8);
 		Scanner scanner = null;
 		String cadeia;
@@ -386,7 +386,7 @@ public class PrincipalController implements Initializable {
 		}
 	}
 
-	private String analisaCadeia(String cadeia, Estado estado, List<Token> tokens, boolean resetBuffer) throws ReconhecimentoException {
+	private static String analisaCadeia(String cadeia, Estado estado, List<Token> tokens, boolean resetBuffer) throws ReconhecimentoException {
 		String caractere;
 		char[] charArray = cadeia.toCharArray();
 		if (resetBuffer) {
@@ -450,7 +450,7 @@ public class PrincipalController implements Initializable {
 		return null;
 	}
 	
-	private boolean analisaNumerico(String cadeia, List<Token> tokens, StringBuffer cadeiaTemp) throws ReconhecimentoException {
+	private static boolean analisaNumerico(String cadeia, List<Token> tokens, StringBuffer cadeiaTemp) throws ReconhecimentoException {
 		char[] charArray = cadeia.toCharArray();
 		String caractere = null;
 		buffer.setLength(0);
@@ -492,7 +492,7 @@ public class PrincipalController implements Initializable {
 		return false;
 	}
 	
-	private boolean analisaLiteral(String cadeia, List<Token> tokens, StringBuffer cadeiaTemp) throws ReconhecimentoException {
+	private static boolean analisaLiteral(String cadeia, List<Token> tokens, StringBuffer cadeiaTemp) throws ReconhecimentoException {
 		char[] charArray = cadeia.toCharArray();
 		String caractere = null;
 		buffer.setLength(0);
@@ -515,7 +515,7 @@ public class PrincipalController implements Initializable {
 		return false;
 	}
 
-	private boolean analisaIdentificador(String cadeia, List<Token> tokens, StringBuffer cadeiaTemp) throws ReconhecimentoException {
+	private static boolean analisaIdentificador(String cadeia, List<Token> tokens, StringBuffer cadeiaTemp) throws ReconhecimentoException {
 		char[] charArray = cadeia.toCharArray();
 		String caractere = null;
 		buffer.setLength(0);
@@ -552,7 +552,7 @@ public class PrincipalController implements Initializable {
 	static boolean lexicoSucesso = true;
 	
 	@FXML
-	public void loadFile() {
+	public static void loadFile(File f) {
 		data.clear();
 		linha = 0;
 		if (buffer != null) {
@@ -562,7 +562,7 @@ public class PrincipalController implements Initializable {
 			buffer2.setLength(0);
 		}
 		FileChooser chooser = new FileChooser();
-		File f = chooser.showOpenDialog(null);
+		//File f = chooser.showOpenDialog(null);
 		if (f == null) {
 			return;
 		}
@@ -574,8 +574,8 @@ public class PrincipalController implements Initializable {
 				//ANALISE SINTATICA
 				System.out.println("sucesso");
 				System.out.println(data);
-				Sintatico sintatico = new Sintatico();
-				sintatico.analisar(data);
+				//Sintatico sintatico = new Sintatico();
+				//sintatico.analisar(data);
 
 			}
 			

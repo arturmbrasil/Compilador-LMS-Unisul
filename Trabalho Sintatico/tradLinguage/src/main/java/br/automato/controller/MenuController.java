@@ -2,8 +2,10 @@ package br.automato.controller;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import br.automato.ReconhecimentoException;
 import javafx.fxml.FXML;
@@ -36,5 +38,34 @@ public class MenuController {
 			} catch (IOException ioe) { 
 			System.out.println(ioe); 
 			}
+	}
+	
+	@FXML
+	public void salvar() {
+        new File("codigo.txt");
+
+		String texto = "";
+        String[] txt=null;
+        PrintWriter pw=null;
+        try {
+            pw = new PrintWriter( new File( "codigo.txt" ) );
+        } catch (FileNotFoundException ex) {
+            throw new RuntimeException(ex);
+        }
+        texto=txtPrograma.getText();
+        txt = texto.split("\n");
+        for (int i = 0; i < txt.length; i++) {
+            pw.println(txt[i]);
+        }
+        pw.close();
+	}
+	
+	@FXML
+	public void btnLexico() {
+		File f = new File("codigo.txt");
+		
+		//Chamar o principal.fxml
+		PrincipalController.loadFile(f);
+		
 	}
 }
