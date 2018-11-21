@@ -8,11 +8,18 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import br.automato.ReconhecimentoException;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.control.TextArea;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 public class MenuController {
 	@FXML
@@ -61,11 +68,26 @@ public class MenuController {
 	}
 	
 	@FXML
-	public void btnLexico() {
+	public void btnLexico(ActionEvent event) {
 		File f = new File("codigo.txt");
-		
+		try {
+
 		//Chamar o principal.fxml
-		PrincipalController.loadFile(f);
+		Stage stage = new Stage();
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("Principal.fxml"));
+		Parent root = loader.load();
+		stage.setScene(new Scene(root));
+		stage.setTitle("Lexico");
+		stage.initOwner(((Node)event.getSource()).getScene().getWindow());
+		stage.show();			
+		
+		PrincipalController controller = (PrincipalController) loader.getController();
+
+		controller.carrega(f);
+		
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 	}
 }

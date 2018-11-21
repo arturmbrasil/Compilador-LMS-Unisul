@@ -551,8 +551,7 @@ public class PrincipalController implements Initializable {
 	
 	static boolean lexicoSucesso = true;
 	
-	@FXML
-	public static void loadFile(File f) {
+	public static void carrega(File f) {
 		data.clear();
 		linha = 0;
 		if (buffer != null) {
