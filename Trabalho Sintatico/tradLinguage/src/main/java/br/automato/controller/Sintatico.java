@@ -11,6 +11,18 @@ public class Sintatico implements MatrizParse {
 
 	static ArrayList<Integer> pilha = new ArrayList<Integer>();
 
+	public boolean isAcaoSemantica(Integer topoPilha) {
+		if(topoPilha>=PRIMEIRA_ACAO_SEMANTICA) {
+			return true;
+		}
+		return false;
+	}
+	public boolean isNaoTerminal(Integer topoPilha) {
+		if(topoPilha>=PRIMEIRO_NAO_TERMINAL && topoPilha<PRIMEIRA_ACAO_SEMANTICA) {
+			return true;
+		}
+		return false;
+	}
 	public void analisar(ObservableList<Recon> tokens) throws IOException {
 		
 		//Limpa pilha e coloca o simbolo inicial e o simbolo de final de arquivo
@@ -40,29 +52,29 @@ public class Sintatico implements MatrizParse {
 				else if(topoPilha == 1) {
 					Alert alertWindow = new Alert(AlertType.INFORMATION);
 					alertWindow.setTitle("SUCESSO");
-					alertWindow.setContentText("An醠ise sintatica concluida com sucesso!");
+					alertWindow.setContentText("An谩lise sintatica concluida com sucesso!");
 					alertWindow.show();		  
 					return;
 				}
 				else {
 					//ERRO
 					Alert alertWindow = new Alert(AlertType.ERROR);
-					alertWindow.setTitle("ERRO SINT罷ICO");
+					alertWindow.setTitle("ERRO SINT脕TICO");
 					alertWindow.setContentText("Linha: "+tokenAtual.getLinha()+ 
 							" - Token encontrado: "+tokenAtual.getToken()+
-							" - C骴igo do token: " + tokenAtual.getCod() + 
+							" - C贸digo do token: " + tokenAtual.getCod() + 
 							" - Topo da pilha: " + topoPilha + ERROS_PARSE[topoPilha]);
 					alertWindow.show();
 					System.out.println("Linha: "+tokenAtual.getLinha()+"\n"
 							+ "Token encontrado: "+tokenAtual.getToken()+"\n"
-							+ "C骴igo do token: " + tokenAtual.getCod() + "\n"
+							+ "C贸digo do token: " + tokenAtual.getCod() + "\n"
 							+ "Topo da pilha: " + topoPilha + "\n"
 							+ ERROS_PARSE[topoPilha]);
 
 					return;
 				}
 			}
-			else if(!topoPilhaIsTerminal(topoPilha)){
+			else if(isNaoTerminal(topoPilha)){ //N茫o 茅 terminal
 				//Remove o topo da pilha
 				pilha.remove(pilha.size()-1);
 
@@ -83,18 +95,24 @@ public class Sintatico implements MatrizParse {
 					alertWindow.setTitle("ERRO SINTATICO");
 					alertWindow.setContentText("Linha: "+tokenAtual.getLinha()+ 
 								" - Token encontrado: "+tokenAtual.getToken()+
-								" - C骴igo do token: " + tokenAtual.getCod() + 
+								" - C贸digo do token: " + tokenAtual.getCod() + 
 								" - Topo da pilha: " + topoPilha + ERROS_PARSE[topoPilha]);
 					alertWindow.show();
 					
 					System.out.println("Linha: "+tokenAtual.getLinha()+"\n"
 							+ "Token encontrado: "+tokenAtual.getToken()+"\n"
-							+ "C骴idigo do token: " + tokenAtual.getCod() + "\n"
+							+ "C贸digo do token: " + tokenAtual.getCod() + "\n"
 							+ "Topo da pilha: " + topoPilha + "\n"
 							+ ERROS_PARSE[topoPilha]);
 					return;
 				}
 		        	
+			}
+			else if(isAcaoSemantica(topoPilha)) { //SE FOR ACAO SEMANTICA
+				//Executa acao semantica
+				
+				//Remove da pilha
+				pilha.remove(pilha.size()-1);
 			}
 		}
 		

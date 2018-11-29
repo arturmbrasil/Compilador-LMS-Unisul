@@ -1,5 +1,2 @@
+/.DS_Store
 /br/
-target/
-bin/
-*.classpath
-*.class

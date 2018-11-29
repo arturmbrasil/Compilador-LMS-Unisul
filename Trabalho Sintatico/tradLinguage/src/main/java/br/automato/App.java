@@ -12,9 +12,9 @@ public class App extends Application {
 	public void start(Stage primaryStage) {
 		try {
 //			Thread.currentThread().getContextClassLoader().getResource("Principal.fxml");
-			AnchorPane root = (AnchorPane)FXMLLoader.load(getClass().getResource("MenuPrincipal.fxml"));
+			AnchorPane root = (AnchorPane)FXMLLoader.load(getClass().getResource("/br/automato/controller/MenuPrincipal.fxml"));
 			Scene scene = new Scene(root);
-			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			scene.getStylesheets().add(getClass().getResource("/br/automato/controller/application.css").toExternalForm());
 			primaryStage.setScene(scene);
 			primaryStage.setMaximized(true);
 			primaryStage.setTitle("Automato");

@@ -551,7 +551,7 @@ public class PrincipalController implements Initializable {
 	
 	static boolean lexicoSucesso = true;
 	
-	public static void carrega(File f) {
+	public static ObservableList<Recon> carrega(File f) {
 		data.clear();
 		linha = 0;
 		if (buffer != null) {
@@ -563,7 +563,7 @@ public class PrincipalController implements Initializable {
 		FileChooser chooser = new FileChooser();
 		//File f = chooser.showOpenDialog(null);
 		if (f == null) {
-			return;
+			return null;
 		}
 		try {
 			//ANALISE LEXICA
@@ -573,6 +573,8 @@ public class PrincipalController implements Initializable {
 				//ANALISE SINTATICA
 				System.out.println("sucesso");
 				System.out.println(data);
+				
+				return data;
 				//Sintatico sintatico = new Sintatico();
 				//sintatico.analisar(data);
 
@@ -589,5 +591,6 @@ public class PrincipalController implements Initializable {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		return null;
 	}
 }

@@ -7,7 +7,11 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import javax.swing.JOptionPane;
+
 import br.automato.ReconhecimentoException;
+import br.automato.domain.Recon;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -25,6 +29,10 @@ public class MenuController {
 	@FXML
 	TextArea txtPrograma;
 	
+	
+	static ObservableList<Recon> data;
+	
+
 	@FXML
 	public void buscaArquivo() {
 		txtPrograma.setText(null);
@@ -68,7 +76,20 @@ public class MenuController {
 	}
 	
 	@FXML
+	public void btnSintatico() {
+		try {
+			Sintatico sintatico = new Sintatico();
+			sintatico.analisar(data);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	@FXML
 	public void btnLexico(ActionEvent event) {
+		System.out.println("teste");
+
 		File f = new File("codigo.txt");
 		try {
 
@@ -81,13 +102,13 @@ public class MenuController {
 		stage.initOwner(((Node)event.getSource()).getScene().getWindow());
 		stage.show();			
 		
-		PrincipalController controller = (PrincipalController) loader.getController();
+		//PrincipalController controller = (PrincipalController) loader.getController();
 
-		controller.carrega(f);
+		data = PrincipalController.carrega(f);
 		
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
 	}
+	
 }
