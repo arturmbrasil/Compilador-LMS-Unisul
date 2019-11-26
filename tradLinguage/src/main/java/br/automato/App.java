@@ -17,7 +17,7 @@ public class App extends Application {
 			scene.getStylesheets().add(getClass().getResource("/br/automato/controller/application.css").toExternalForm());
 			primaryStage.setScene(scene);
 			primaryStage.setMaximized(true);
-			primaryStage.setTitle("Automato");
+			primaryStage.setTitle("Compilador LMS");
 			primaryStage.show();
 		} catch(Exception e) {
 			e.printStackTrace();

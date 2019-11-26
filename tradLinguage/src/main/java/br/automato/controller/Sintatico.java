@@ -2,7 +2,10 @@ package br.automato.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+
+import br.automato.SemanticoException;
 import br.automato.domain.Recon;
+import br.automato.domain.Token;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -10,7 +13,8 @@ import javafx.scene.control.Alert.AlertType;
 public class Sintatico implements MatrizParse {
 
 	static ArrayList<Integer> pilha = new ArrayList<Integer>();
-	
+	Semantico semantico;
+
 	public boolean isAcaoSemantica(Integer topoPilha) {
 		if(topoPilha>=PRIMEIRA_ACAO_SEMANTICA) {
 			return true;
@@ -23,14 +27,16 @@ public class Sintatico implements MatrizParse {
 		}
 		return false;
 	}
-	public void analisar(ObservableList<Recon> tokens) throws IOException {
-		
+	public void analisar(ObservableList<Recon> tokens, boolean executarSemantico) throws IOException {
+		semantico = new Semantico(); //Inicializa o analisador semantico
+
 		//Limpa pilha, coloca o simbolo inicial e o simbolo de final de arquivo
 		pilha.clear();
 		pilha.add(Integer.valueOf(1)); //EOF
 		pilha.add(Integer.valueOf(SIMBOLO_INICIAL));
 		Integer topoPilha = (Integer)pilha.get(pilha.size() - 1);
-		Recon tokenAtual;
+		Recon tokenAtual, tokenAnterior = null;
+		
 		int i = 0; //index do token que está sendo analisado
 		while (!pilha.isEmpty() || topoPilha != 1) { 
 			topoPilha = (Integer)pilha.get(pilha.size() - 1);
@@ -44,6 +50,7 @@ public class Sintatico implements MatrizParse {
 				if(topoPilha == tokenAtual.getCod()) { //Topo da pilha é o token atual = reconhecido
 					//Remove token do topo da pilha e vai para o prox token
 					i++;
+					tokenAnterior = tokenAtual;
 					pilha.remove(pilha.size()-1);
 					topoPilha = (Integer)pilha.get(pilha.size() - 1);
 				}
@@ -118,9 +125,15 @@ public class Sintatico implements MatrizParse {
 		}
 			else if(isAcaoSemantica(topoPilha)) { //SE FOR ACAO SEMANTICA
 				//Executa acao semantica
-				
+				if (executarSemantico) {
+					try {
+						semantico.executaAcao(topoPilha, tokenAtual, tokenAnterior);
+					} catch (SemanticoException e) {
+						e.printStackTrace();
+					}
+				}
 				//Remove da pilha
-				pilha.remove(pilha.size()-1);
+				pilha.remove(pilha.size()-1);					
 			}
 			
 			if(i >= tokens.size() && tokenAtual.getCod() != 16) { //Quando analisa todos os tokens mas não encontra simbolo de final de arquivo
@@ -136,7 +149,6 @@ public class Sintatico implements MatrizParse {
 		}
 	}
 
-	
 	public boolean topoPilhaIsTerminal (Integer topoPilha) {
 		if(topoPilha<46) {
 			return true; // é terminal

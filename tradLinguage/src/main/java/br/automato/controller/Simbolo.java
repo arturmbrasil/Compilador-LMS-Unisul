@@ -1,10 +1,10 @@
 package br.automato.controller;
 
 public class Simbolo {
-	String nome, categoria, geralA, geralB;
-	int nivel;
+	String nome, categoria;
+	int nivel, geralA, geralB;
 	
-	public Simbolo(String nome, String categoria, String geralA, String geralB, int nivel) {
+	public Simbolo(String nome, String categoria, int geralA, int geralB, int nivel) {
 		super();
 		this.nome = nome;
 		this.categoria = categoria;
@@ -29,19 +29,19 @@ public class Simbolo {
 		this.categoria = categoria;
 	}
 
-	public String getGeralA() {
+	public int getGeralA() {
 		return geralA;
 	}
 
-	public void setGeralA(String geralA) {
+	public void setGeralA(int geralA) {
 		this.geralA = geralA;
 	}
 
-	public String getGeralB() {
+	public int getGeralB() {
 		return geralB;
 	}
 
-	public void setGeralB(String geralB) {
+	public void setGeralB(int geralB) {
 		this.geralB = geralB;
 	}
 

@@ -1,8 +1,10 @@
-program TESTEPROC1;
+program TESTE;
+CONST teste = 5;
 VAR
 X, Y, Z :INTEGER;
-PROCEDURE P;
-VAR
-A :INTEGER;
 BEGIN
-READLN(A);
+Z:=0;
+READLN(X,Y);
+Z:= X+Y;
+WRITELN(Z);
+END.

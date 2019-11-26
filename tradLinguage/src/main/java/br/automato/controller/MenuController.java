@@ -79,7 +79,18 @@ public class MenuController {
 	public void btnSintatico() {
 		try {
 			Sintatico sintatico = new Sintatico();
-			sintatico.analisar(data);
+			sintatico.analisar(data,false);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	@FXML
+	public void btnSemantico() {
+		try {
+			Sintatico sintatico = new Sintatico();
+			sintatico.analisar(data,true);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

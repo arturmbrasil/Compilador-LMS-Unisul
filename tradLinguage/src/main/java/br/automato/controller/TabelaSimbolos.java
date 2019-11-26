@@ -6,7 +6,7 @@ public class TabelaSimbolos {
 	private ArrayList<Simbolo> tabela = new ArrayList<Simbolo>();
 
 	//Inserir na tabela
-	public boolean insere (String nome, String categoria, int nivel, String geralA, String geralB) {
+	public boolean insere (String nome, String categoria, int nivel, int geralA, int geralB) {
 		
 		int posicao = busca(nome); //Verifica se o simbolo ja existe
 
@@ -31,8 +31,24 @@ public class TabelaSimbolos {
 		return -1;
 	}
 	
+    public Simbolo buscaParametro(String nome) {
+        for(int i = 0 ; i <= tabela.size() - 1 ; i++){
+			if(tabela.get(i).getNome().equals(nome))
+				return tabela.get(i);
+		}
+        return null;
+    }
+    
+    public Simbolo buscaSimbolo(String nome) {
+        for(int i = 0 ; i <= tabela.size() - 1 ; i++){
+			if(tabela.get(i).getNome().equals(nome))
+				return tabela.get(i);
+		}
+        return null;
+    }
+	
 	//Alterar Simbolo
-	public boolean altera (int posicao, String nome, String categoria, int nivel, String geralA, String geralB) {
+	public boolean altera (int posicao, String nome, String categoria, int nivel, int geralA, int geralB) {
 		if(posicao >= tabela.size() || posicao < 0) {
 			return false; //Quando não existe simbolo na posição que esta sendo alterada
 		}
@@ -64,6 +80,9 @@ public class TabelaSimbolos {
 		}
 	}
 
+	public ArrayList<Simbolo> getTabela() {
+		return tabela;
+	}
 
 	@Override
 	public String toString() {
