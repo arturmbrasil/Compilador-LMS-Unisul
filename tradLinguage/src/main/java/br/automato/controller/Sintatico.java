@@ -65,10 +65,12 @@ public class Sintatico implements MatrizParse {
 						alertWindow.show();
 					}
 					else { //Topo da pilha = final de arquivo; e não tem mais nenhum token para analisar
-						Alert alertWindow = new Alert(AlertType.INFORMATION);
-						alertWindow.setTitle("SUCESSO");
-						alertWindow.setContentText("Análise sintatica concluida com sucesso!");
-						alertWindow.show();		  						
+						if (!executarSemantico) {
+							Alert alertWindow = new Alert(AlertType.INFORMATION);
+							alertWindow.setTitle("SUCESSO");
+							alertWindow.setContentText("Análise sintatica concluida com sucesso!");
+							alertWindow.show();		  													
+						}
 					}
 					return;
 				}

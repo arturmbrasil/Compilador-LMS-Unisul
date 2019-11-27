@@ -7,6 +7,8 @@ import java.util.Stack;
 import br.automato.SemanticoException;
 import br.automato.domain.Recon;
 import br.automato.domain.Token;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 
 public class Semantico {
     private static List<String[]> codigoIntermediario = new ArrayList<>();
@@ -167,7 +169,7 @@ public class Semantico {
 		
 		case 110: //#110: Fim de procedure
 			codigoIntermediario.add(new String[]{"RETU", "-1", procedures.pop().getGeralB()+""});
-			codigoIntermediario.get(pilhaProcedures.pop())[2] = String.valueOf(codigoIntermediario.size() + 1);
+			codigoIntermediario.get(pilhaProcedures.pop())[2] = String.valueOf(codigoIntermediario.size());
 	        tabelaSimbolos.excluiNivel(nivelAtual);
 	        nivelAtual--;
 			break;
@@ -204,7 +206,6 @@ public class Semantico {
 		            throw new SemanticoException("Erro semantico no número de parametros");
 			 np = 0;
 		     codigoIntermediario.add(new String[]{"CALL", String.valueOf(nivelAtual - simboloAtual.getNivel()), simboloAtual.getGeralA() + ""});
-   
 			break;
 			
 		case 118: //#118: Após expressão, em comando call
@@ -222,7 +223,7 @@ public class Semantico {
 		
 		case 122: //#122: Após domínio do THEN, antes do ELSE
 			codigoIntermediario.add(new String[]{"DSVS", "-1", ""});
-			codigoIntermediario.get(ifs.pop())[2] = String.valueOf(codigoIntermediario.size() + 1);
+			codigoIntermediario.get(ifs.pop())[2] = String.valueOf(codigoIntermediario.size());
 	        ifs.push(codigoIntermediario.size() - 1); 
 			break;
 			
@@ -344,7 +345,7 @@ public class Semantico {
 	        codigoIntermediario.add(new String[]{"SOMA", "-1", "-1"});
 	        codigoIntermediario.add(new String[]{"ARMZ", String.valueOf(nivelAtual - controleAtual.getNivel()), controleAtual.getGeralA()+""});
 	        codigoIntermediario.get(fors.pop() ) [2] = String.valueOf(codigoIntermediario.size() + 2);
-	        codigoIntermediario.add(new String[]{"DSVS", "-1", String.valueOf(fors.pop() + 1)});
+	        codigoIntermediario.add(new String[]{"DSVS", "-1", String.valueOf(fors.pop())});
 	        codigoIntermediario.add(new String[]{"AMEM", "-1", "-1"});
 			break;
 			
@@ -401,7 +402,7 @@ public class Semantico {
 			break;
 			
 		case 154: //CRCT
-	        codigoIntermediario.add(new String[]{"CRCT", "-1", "-1"});
+	        codigoIntermediario.add(new String[]{"CRCT", "-1",  tokenAnterior.getToken()});
 			break;
 			
 		case 155: //NEGA
@@ -415,16 +416,16 @@ public class Semantico {
 		default:
 			break;
 			
-			
 		}
 	}
 
 	public void executaCodigo() throws SemanticoException {
 		int codigoInstrucao, op1, op2;
+		String op1txt, op2txt;
 		instrucoes = new Instrucoes();
-		 for (int i = 0; i < codigoIntermediario.size(); i++) { //para cada instrucao
+		String codigo = "";
+		 for (int i = 0; i < codigoIntermediario.size(); i++) { //para cada instrucao			 
 			 //pega valor instrucao
-			 
 			 codigoInstrucao = instrucoes.buscaInstrucao(codigoIntermediario.get(i)[0]);
 			 if(codigoInstrucao == -1) {
 		            throw new SemanticoException("Instrucao ' "+ codigoIntermediario.get(i)[0]  +" ' inexistente");
@@ -432,9 +433,26 @@ public class Semantico {
 			 op1 = Integer.parseInt(codigoIntermediario.get(i)[1]);
 			 op2 = Integer.parseInt(codigoIntermediario.get(i)[2]);
 			 
+			 if(op1 == -1) 
+				 op1txt = " - ";
+			 else
+				 op1txt = op1+"";
+			 
+			 if(op2 == -1) 
+				 op2txt = " - ";
+			 else
+				 op2txt = op2+"";
+
+			 codigo += i + " - " + codigoIntermediario.get(i)[0] + " " + op1txt  + " " +  op2txt + "\n";
+			 
 			 hipotetica.IncluirAI(AI, codigoInstrucao, op1, op2);
 		 }
 		 
+		 Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Código Intermediario");
+			alert.setContentText(codigo);
+   			alert.showAndWait();
+
 		 Hipotetica.Interpreta(AI, AL);
 	}
 }
