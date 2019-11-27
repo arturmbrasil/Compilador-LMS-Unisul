@@ -69,4 +69,14 @@ public class Instrucoes {
 	public void limpar() {
 		instrucao.clear();
 	}
+	
+	//busca codigo da instrucao
+	public int buscaInstrucao(String instru) {
+		for(int i = 1; i<instrucoes.length; i++) {
+			if (instrucoes[i].equals(instru)) {
+				return i;
+			}
+		}
+		return -1;
+	}
 }

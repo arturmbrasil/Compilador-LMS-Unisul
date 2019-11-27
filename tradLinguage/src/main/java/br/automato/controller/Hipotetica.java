@@ -1,5 +1,9 @@
 package br.automato.controller;
 
+import java.util.Optional;
+
+import javax.print.attribute.standard.DialogTypeSelection;
+
 //Maquina_virtual para a linguagem LMS
 //Equipe:Maicon, reinaldo e Fabio - 2003A
 //Adaptado e corrigido por Rogério Cortina e Charbel Szymanski - 2003B
@@ -9,6 +13,11 @@ package br.automato.controller;
 
 
 import javax.swing.JOptionPane;
+
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Dialog;
+import javafx.scene.control.TextInputDialog;
 
 /**
 * Classe que implementa a máquina hipotética.
@@ -153,6 +162,8 @@ class Hipotetica{
 	  	operador=0;
 	  	
 	  	String leitura;
+	  	Alert alert;
+	  	TextInputDialog dialog;
 	  	
 	  	while (operador != 26) {//Enquanto instrução diferente de PARE
 	  		
@@ -202,7 +213,13 @@ class Hipotetica{
 			       		
 			       	case 8: //DIVI
 			       		if (S[topo]==0){
-			       			JOptionPane.showMessageDialog(null,"Divisão por zero.","Erro durante a execução",JOptionPane.ERROR_MESSAGE);
+			       			//JOptionPane.showMessageDialog(null,"Divisão por zero.","Erro durante a execução",JOptionPane.ERROR_MESSAGE);
+			       			
+			       			alert = new Alert(AlertType.ERROR);
+			       			alert.setTitle("Erro durante a execução");
+			       			alert.setContentText("Divisão por zero.");
+			       			alert.showAndWait();
+			       			
 			       			S[topo-1]=S[topo-1] / S[topo];
 			       			topo=topo-1;
 			       		}
@@ -302,13 +319,27 @@ class Hipotetica{
 			       		
 			       	case 21://LEIT
 			       		topo=topo+1;
-			       		leitura = JOptionPane.showInputDialog(null,"Informe o valor:","Leitura",JOptionPane.QUESTION_MESSAGE);
-			       		//System.out.print("Leia: "); A
-			       		(S[topo])=Integer.parseInt(leitura); //problema aqui A
+			       		//leitura = JOptionPane.showInputDialog(null,"Informe o valor:","Leitura",JOptionPane.QUESTION_MESSAGE);
+			       		dialog = new TextInputDialog("");
+			       		dialog.setTitle("Leitura");
+			       		dialog.setHeaderText("Informe o valor:");
+
+			       		Optional<String> result = dialog.showAndWait();
+			       		if (result.isPresent()){
+			       			//System.out.print("Leia: "); A
+			       			(S[topo])=Integer.parseInt(result.get()); //problema aqui A			       			
+			       		}
 			       		break;
 			       		
 			       	case 22://IMPR
-			       		JOptionPane.showMessageDialog(null,"" + S[topo],"Informação",JOptionPane.INFORMATION_MESSAGE);
+			       		//JOptionPane.showMessageDialog(null,"" + S[topo],"Informação",JOptionPane.INFORMATION_MESSAGE);
+			       		
+			       		alert = new Alert(AlertType.INFORMATION);
+		       			alert.setTitle("Informação.");
+		       			alert.setContentText("" + S[topo]);
+		       			alert.showAndWait();
+		       			
+			       		
 			       		//System.out.println(S[topo]); A
 			       		topo=topo-1;
 			       		break;
@@ -316,12 +347,22 @@ class Hipotetica{
 			       	case 23://IMPRLIT
 			       		if (a>= AL.LIT)
 			       		{
-			       			JOptionPane.showMessageDialog(null,"Literal não encontrado na área dos literais.","Erro durante a execução",JOptionPane.ERROR_MESSAGE);
+			       			//JOptionPane.showMessageDialog(null,"Literal não encontrado na área dos literais.","Erro durante a execução",JOptionPane.ERROR_MESSAGE);
 			       			//System.out.println("ERRO >> Literal nao encontrada na area"); A
+			       			
+			       			alert = new Alert(AlertType.ERROR);
+			       			alert.setTitle("Erro durante a execução.");
+			       			alert.setContentText("Literal não encontrado na área dos literais.");
+			       			alert.showAndWait();
 			       		}else{
-			       			JOptionPane.showMessageDialog(null,"" + AL.AL[a],"Informação",JOptionPane.INFORMATION_MESSAGE);
+			       			//JOptionPane.showMessageDialog(null,"" + AL.AL[a],"Informação",JOptionPane.INFORMATION_MESSAGE);
 			       			//System.out.println(AL.AL[a]); A
 			       			//AL.LIT++;
+			       			
+			       			alert = new Alert(AlertType.INFORMATION);
+			       			alert.setTitle("Informação");
+			       			alert.setContentText("" + AL.AL[a]);
+			       			alert.showAndWait();
 			       		}
 			       		break;
 			       		

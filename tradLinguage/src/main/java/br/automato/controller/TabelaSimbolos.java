@@ -31,14 +31,6 @@ public class TabelaSimbolos {
 		return -1;
 	}
 	
-    public Simbolo buscaParametro(String nome) {
-        for(int i = 0 ; i <= tabela.size() - 1 ; i++){
-			if(tabela.get(i).getNome().equals(nome))
-				return tabela.get(i);
-		}
-        return null;
-    }
-    
     public Simbolo buscaSimbolo(String nome) {
         for(int i = 0 ; i <= tabela.size() - 1 ; i++){
 			if(tabela.get(i).getNome().equals(nome))

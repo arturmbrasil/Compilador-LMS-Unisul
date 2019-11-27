@@ -129,6 +129,10 @@ public class Sintatico implements MatrizParse {
 					try {
 						semantico.executaAcao(topoPilha, tokenAtual, tokenAnterior);
 					} catch (SemanticoException e) {
+		       			Alert alert = new Alert(AlertType.ERROR);
+		       			alert.setTitle("Erro durante a execução");
+		       			alert.setContentText(e.getMessage());
+		       			alert.showAndWait();
 						e.printStackTrace();
 					}
 				}
