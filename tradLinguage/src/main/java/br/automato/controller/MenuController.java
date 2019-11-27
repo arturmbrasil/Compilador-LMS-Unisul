@@ -53,6 +53,23 @@ public class MenuController {
 			} catch (IOException ioe) { 
 			System.out.println(ioe); 
 			}
+		
+		new File("codigo.txt");
+
+		String texto = "";
+        String[] txt=null;
+        PrintWriter pw=null;
+        try {
+            pw = new PrintWriter( new File( "codigo.txt" ) );
+        } catch (FileNotFoundException ex) {
+            throw new RuntimeException(ex);
+        }
+        texto=txtPrograma.getText();
+        txt = texto.split("\n");
+        for (int i = 0; i < txt.length; i++) {
+            pw.println(txt[i]);
+        }
+        pw.close();
 	}
 	
 	@FXML
@@ -78,6 +95,9 @@ public class MenuController {
 	@FXML
 	public void btnSintatico() {
 		try {
+			File f = new File("codigo.txt");
+			data = PrincipalController.carrega(f);
+
 			Sintatico sintatico = new Sintatico();
 			sintatico.analisar(data,false);
 		} catch (IOException e) {
@@ -89,6 +109,9 @@ public class MenuController {
 	@FXML
 	public void btnSemantico() {
 		try {
+			File f = new File("codigo.txt");
+			data = PrincipalController.carrega(f);
+
 			Sintatico sintatico = new Sintatico();
 			sintatico.analisar(data,true);
 		} catch (IOException e) {

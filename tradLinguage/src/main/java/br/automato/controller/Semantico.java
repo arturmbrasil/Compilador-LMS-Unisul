@@ -18,7 +18,7 @@ public class Semantico {
 	private Stack<Integer> whiles;
 	private Stack<Integer> repeats;
 	private Stack<Integer> pilhaProcedures;
-	private Stack<Integer> cases;
+	private Stack<Integer> cases; //TODO
 	private Stack<Integer> fors;
 	private  List<Simbolo> parametros = new ArrayList<>();
 
@@ -29,21 +29,14 @@ public class Semantico {
 	private int nv; //Numero de variaveis
 	private int np = 0; //Numero de parametros
 	private int deslocamento;
-	private int lc; //Aponta para a prox instrucao a ser gerada
-	private int lit; //prox aux area de literais
-	private int acaoAcumulada = 3;
-	private int pt_livre;
 	private int escopo[] = new int[9999];
 	
 	public int nivelVar, deslocVar;
-	private int linhaAtual = 1;
 
 	private AreaInstrucoes AI;
 	private AreaLiterais AL;
 	private Hipotetica hipotetica;
 	
-	private String penultimo;
-	private String antepenultimo;
 	private String nome_identificador = "";
 	private String tipo_identificador = "";
 
@@ -78,15 +71,12 @@ public class Semantico {
 			Hipotetica.InicializaAL(AL);
 			
 			nivelAtual = 0;
-			pt_livre = 0;
 			escopo[0] = 1;
 			nv = 0;
 			deslocamento = 3;
 			AI.LC = 1;
 			AL.LIT = 1;
-			
-			linhaAtual = 1;
-			
+						
 			tabelaSimbolos = new TabelaSimbolos();
 			nv = 0;
 			deslocamento = 3;

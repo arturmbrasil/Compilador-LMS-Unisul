@@ -169,7 +169,6 @@ class Hipotetica{
 	  		
 	  		operador=AI.AI[p].codigo;
 	  		
-	  		
 	  		l=AI.AI[p].op1;
 	  		a=AI.AI[p].op2;
 	  		p=p+1;
@@ -221,6 +220,10 @@ class Hipotetica{
 			       			alert.showAndWait();
 			       			
 			       			S[topo-1]=S[topo-1] / S[topo];
+			       			topo=topo-1;
+			       		}
+			       		else{
+			       			S[topo-1]=S[topo-1]/S[topo];
 			       			topo=topo-1;
 			       		}
 			       		break;
