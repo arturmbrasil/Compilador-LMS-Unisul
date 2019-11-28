@@ -2,8 +2,8 @@ program TESTE;
 VAR
 X, Y, Z :INTEGER;
 BEGIN
-Z:=0;
-READLN(X,Y);
-Z:= X+Y;
-WRITELN(Z);
+	Z:=0;
+	READLN(X,Y);
+	Z:= X+A;
+	WRITELN(Z);
 END.

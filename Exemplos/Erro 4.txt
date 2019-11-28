@@ -1,0 +1,6 @@
+program TESTE; (*teste TESTE *)
+CONST
+Z = 12;
+BEGIN
+	READLN(x,y);
+END.

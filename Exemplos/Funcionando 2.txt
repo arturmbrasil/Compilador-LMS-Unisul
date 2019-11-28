@@ -4,6 +4,6 @@ X, Y, Z :INTEGER;
 BEGIN
 	Z:=0;
 	READLN(X,Y);
-	Z:= X+Y;
+	Z:= X/Y;
 	WRITELN(Z);
 END.

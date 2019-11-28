@@ -1,9 +1,9 @@
 program TESTE;
 VAR
-X, Y, Z :INTEGER;
+X, Z :INTEGER;
 BEGIN
 	Z:=0;
-	READLN(X,Y);
-	Z:= X+Y;
+	READLN(X);
+	Z:= X/0;
 	WRITELN(Z);
 END.
